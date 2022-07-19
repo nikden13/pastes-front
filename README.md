@@ -1,24 +1,7 @@
-# front-test-task
+Docker version 20.10.14
 
-## Project setup
-```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. git pull https://github.com/nikden13/pastes-front.git
+2. cd pastes-front/
+3. docker build -t vuejs-cookbook/dockerize-vuejs-app .
+4. docker run -it -p 8080:8080 --rm --name dockerize-vuejs-app-1 vuejs-cookbook/dockerize-vuejs-app
+5. http://localhost:8080/
