@@ -4,9 +4,12 @@
       <div class="pastes__item-title"> {{ paste.title }}</div>
       <div class="pastes__item-attr"> <span>Created: </span> {{ paste.created_at }}</div>
     </div>
-    <default-button>
-      View
-    </default-button>
+
+    <router-link :to="{name: 'paste', params: {hash: paste.hash}}" @click="scrollToTop">
+      <default-button>
+        View
+      </default-button>
+    </router-link>
   </div>
 </template>
 
@@ -27,7 +30,10 @@ export default {
   components: {
      DefaultButton,
   },
-  computed: {
+  methods: {
+    scrollToTop() {
+      window.scrollTo(0,0);
+    }
   }
 }
 </script>

@@ -5,11 +5,13 @@
         v-model="paste.title"
         type="text"
         placeholder="Title"
+        required
     />
     <default-textarea
         class="textarea"
         placeholder="Text"
         v-model="paste.body"
+        required
     >
     </default-textarea>
 
@@ -21,7 +23,7 @@
 
     <span>Expiration time: </span>
     <select size="1" class="select" v-model="paste.expiration_time">
-      <option value="null" selected>Indefinitely</option>
+      <option value="0" selected>Indefinitely</option>
       <option value="600" selected>10 minutes</option>
       <option value="3600">1 hour</option>
       <option value="10800">3 hours</option>
@@ -32,7 +34,7 @@
 
     <default-button
         class="create-paste"
-        @click="createPaste"
+        @click="createPasteForm(this.paste)"
     >
       Create
     </default-button>
@@ -43,32 +45,41 @@
 import DefaultButton from "@/components/ui/default-button";
 import DefaultInput from "@/components/ui/default-input";
 import DefaultTextarea from "@/components/ui/default-textarea";
+import {mapActions} from "vuex";
 
 export default {
   data () {
     return {
       paste: {
-        title: 'test',
-        body: 'test',
-        visibility: 0,
-        expiration_time: null,
-      }
-    }
-  },
-  components: {
-    DefaultTextarea, DefaultButton, DefaultInput,
-  },
-  methods: {
-    createPaste() {
-      this.$emit('create', this.paste)
-      this.paste = {
         title: '',
         body: '',
         visibility: 0,
-        expiration_time: null,
+        expiration_time: 0,
+      },
+    }
+  },
+  components: {
+    DefaultTextarea,
+    DefaultButton,
+    DefaultInput,
+  },
+  methods: {
+    async createPasteForm(paste) {
+      const createdPaste =  await this.createPaste(paste);
+      if (createdPaste) {
+        this.paste = {
+          title: '',
+          body: '',
+          visibility: 0,
+          expiration_time: 0,
+        };
+        this.$emit('update:linkCreatedPaste', 'http://localhost:8080/pastes/' + createdPaste.hash);
+        this.$emit('update:showModal', true);
       }
-      this.$emit('update:show', false);
     },
+    ...mapActions([
+      'createPaste',
+    ]),
   },
 }
 </script>

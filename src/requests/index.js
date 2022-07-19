@@ -6,6 +6,10 @@ export default {
         headers: {'Accept': 'application/json'}
     },
 
+    getBaseUrl() {
+        return this.baseUrl;
+    },
+
     async get(url, params) {
         url = this.baseUrl + url;
         let config = this.config;

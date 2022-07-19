@@ -23,6 +23,8 @@ export default {
 }
 .default-btn:hover {
   background-color: rgba(0, 128, 0, .6);
-  color: inherit;
+  color: white;
 }
+
+.default-btn:
 </style>

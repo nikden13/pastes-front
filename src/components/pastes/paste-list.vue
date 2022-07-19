@@ -12,17 +12,26 @@
 
 <script>
 import PasteItem from '@/components/pastes/paste-item.vue'
+import {mapActions, mapGetters} from "vuex";
 
 export default {
   name: "paste-list",
-  props: {
-    pastes: {
-      type: Array,
-      required: true
-    },
-  },
   components: {
     PasteItem,
+  },
+  computed: {
+    ...mapGetters([
+      'pastes',
+      'lastCreatedPaste',
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'getPastes',
+    ]),
+  },
+  mounted() {
+    this.getPastes();
   },
 }
 </script>
@@ -37,6 +46,7 @@ export default {
     margin-top: 50px;
     display: flex;
     flex-direction: column;
+    padding: 0 100px;
   }
 
   .paste {

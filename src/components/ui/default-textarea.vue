@@ -3,6 +3,7 @@
       :value="modelValue"
       @input="update"
       class="default-textarea"
+      @keydown.tab.prevent="tabber($event)"
   >
   </textarea>
 </template>
@@ -16,6 +17,15 @@ export default {
   methods: {
     update(event) {
       this.$emit('update:modelValue', event.target.value)
+    },
+    tabber(event) {
+      if (event) {
+        event.preventDefault()
+        let startText = event.target.value.slice(0, event.target.selectionStart)
+        let endText = event.target.value.slice(event.target.selectionStart)
+        event.target.value = `${startText}\t${endText}`
+        event.target.selectionEnd = event.target.selectionStart + 1
+      }
     }
   }
 }
